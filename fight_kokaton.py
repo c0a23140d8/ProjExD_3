@@ -142,19 +142,30 @@ class Bomb:
 
 
 class Score:
-    se
-
-
+    def __init__(self, screen): 
+        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)
+        self.img = self.fonto.render("スコア:", True,(0, 0, 255))
+        self.screen = screen
+        screen.blit(self.img, [100, 50])
+        pg.display.update()
+        
+    def update(self, score_count):
+        self.img = self.fonto.render("スコア:"+str(score_count), True,(0, 0, 255))
+        self.screen.blit(self.img, [WIDTH-500, HEIGHT-50])
+        # pg.display.update()
+        
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
     bg_img = pg.image.load("fig/pg_bg.jpg")
     bird = Bird((300, 200))
+    score = Score(screen)
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((255, 0, 0), 10) for _ in range(NUM_OF_BOMBS)]
     clock = pg.time.Clock()
     tmr = 0
     beam = None
+    score_count = 0 #初期のスコアを0
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -173,7 +184,6 @@ def main():
                     txt = fonto.render("Game Over", True, (255, 0, 0))
                     screen.blit(txt, [WIDTH/2-150, HEIGHT/2])
                     pg.display.update()
-                    pg.display.update()
                     time.sleep(1)
                     return
                 
@@ -184,7 +194,9 @@ def main():
                         bombs[i] = None 
                         beam = None
                         bird.change_img(6, screen)
+                        score_count += 1
         bombs = [bomb for bomb in bombs if bomb is not None]
+        score.update(score_count)
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
