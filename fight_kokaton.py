@@ -169,7 +169,6 @@ def main():
                     txt = fonto.render("Game Over", True, (255, 0, 0))
                     screen.blit(txt, [WIDTH/2-150, HEIGHT/2])
                     pg.display.update()
-                    time.sleep(5)
                     pg.display.update()
                     time.sleep(1)
                     return
@@ -177,8 +176,8 @@ def main():
         for i in range(len(bombs)):
             if bomb is not None:
                 if beam is not None:
-                    if bomb.rct.colliderect(beam.rct):
-                        bomb = None 
+                    if bombs[i].rct.colliderect(beam.rct):
+                        bombs[i] = None 
                         beam = None
                         bird.change_img(6, screen)
         bombs = [bomb for bomb in bombs if bomb is not None]
