@@ -165,7 +165,7 @@ class Score:
         
     def update(self, score_count):
         self.img = self.fonto.render("スコア:"+str(score_count), True,(0, 0, 255))
-        self.screen.blit(self.img, [WIDTH-500, HEIGHT-50])
+        self.screen.blit(self.img, [0, HEIGHT-50])
         # pg.display.update()
         
 def main():
